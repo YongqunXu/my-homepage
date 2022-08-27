@@ -1,0 +1,195 @@
+\documentclass[UTF8]{article}
+\usepackage{ctex}
+\usepackage{geometry}
+\usepackage{amsmath}%align	pmatrix
+\usepackage{hyperref}
+%\usepackage{cancel}
+\usepackage{tikz}
+\title{\kaishu \\\small\today}
+\date{}
+\author{}
+\geometry{a4paper,scale=0.8}
+%\newcommand{\red}[1]{{\color{red}{#1}}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\pdo}[2]{\frac{\partial #1}{\partial #2}}%偏导，指定两个参数，定义表达式
+
+\newcommand{\red}[1]{{\color{red}{#1}}}
+\newcommand{\green}[1]{{\color{green}{#1}}}
+\newcommand{\blue}[1]{{\color{blue}{#1}}}
+\begin{document}
+	%	\maketitle
+	%		\kaishu	
+\section{Einstein-Hillbert Action}
+	
+场和物质的作用量是分开的，先考虑没有物质的场作用量，称为爱因斯坦希尔伯特作用量。
+
+\begin{equation}\label{action}
+	S=\frac{1}{2k_D^2}\int\dd^4x\sqrt{-g}R=\frac{1}{2k_D^2}\int\dd^4x\sqrt{-g}g^{\mu\nu}R_{\mu\nu}
+\end{equation}
+
+对它变分，得到三项：
+\begin{align}
+\delta(\sqrt{-g}g^{\mu\nu} R_{\mu\nu})&=\delta\sqrt{-g}g^{\mu\nu} R_{\mu\nu}+\sqrt{-g}\delta g^{\mu\nu} R_{\mu\nu}+\sqrt{-g}g^{\mu\nu} \delta R_{\mu\nu}\\
+&=-\frac{1}{2}g_{\mu\nu}R\sqrt{-g}\delta g^{\mu\nu}+ R_{\mu\nu}\sqrt{-g}\delta g^{\mu\nu}+\sqrt{-g}g^{\mu\nu} \delta R_{\mu\nu}\\
+&=\sqrt{-g}(R_{\mu\nu}-\frac{1}{2}Rg_{\mu\nu})\delta g^{\mu\nu}-\sqrt{-g}\nabla_{\sigma}(g^{\mu\nu}\delta{\Gamma^\sigma}_{\mu\nu}-g^{\sigma\nu}\delta{\Gamma^\rho}_{\rho\nu})
+\end{align}
+前两项我们要把它化作$ \delta g^{\mu\nu} $的因式，最后一项化作全微分，然后用stroke定律化成边界项消去。
+
+\textbf{引理1}$\quad  \delta g^{\mu\nu}=-g^{\mu\rho}g^{\nu\sigma}\delta g_{\rho\sigma}$，取恒等式$ g_{\rho\mu}g^{\mu\nu}={\delta^\nu}_{\rho} $变分
+
+\textbf{引理2}$ \quad \delta\sqrt{-g}=-\frac{1}{2}\sqrt{-g}g_{\mu\nu}\delta g^{\mu\nu} $
+
+行列式变分。对于可对角化的矩阵来说：\red{$ \log\det A=tr \log A  $}对它变分(梁灿彬pdf842,卷一81)
+
+\begin{equation}
+	\frac{1}{\det A}\delta(\det A)=tr (A^{-1}\delta A)
+\end{equation}
+结合这个式子和引理1即可
+
+~\\
+
+根据引理2，第一项
+
+\begin{equation}
+	 (\delta \sqrt{-g})g^{\mu\nu}R_{\mu\nu}=(-\frac{1}{2}\sqrt{-g}g_{\mu\nu}\delta g^{\mu\nu} )g^{\mu\nu}R_{\mu\nu}=-\frac{1}{2}\sqrt{-g}Rg_{\mu\nu}\delta g^{\mu\nu} \label{2}
+\end{equation}
+\textbf{第三项} 涉及对里奇张量的变分，里奇张量由曲率张量降指标而成，曲率张量又与联络有关，联络最终由度规写出。我们最终只要把它写作协变散度即可。
+
+首先考虑曲率张量为：
+\begin{equation}
+	\begin{aligned}
+		R_{\mu \nu \sigma}^{\rho} &=-2 \partial_{[\mu} {\Gamma^{\rho}}_{\nu]\sigma}+2 {\Gamma^{\lambda}}_{\sigma[\mu} {\Gamma^{\rho} }_{\nu] \lambda}\\
+		&={\Gamma^\rho}_{\mu \sigma, v}-{\Gamma^\rho}_{v \sigma, \mu}+{\Gamma^\lambda}_{\sigma \mu}{\Gamma^{\rho}}_{\nu \lambda}-{\Gamma^{\lambda}}_{\sigma \nu} {\Gamma^\rho}_{\mu \lambda}
+	\end{aligned}
+\end{equation}
+
+对直接对它变分就可以得到：
+
+\begin{align}
+\delta {R_{\mu\nu\sigma}}^\rho&=
+\partial_\nu{\delta\Gamma^\rho}_{\mu \sigma}
+-\partial_\mu{\delta\Gamma^\rho}_{\nu \sigma}
++{\delta\Gamma^\lambda}_{\sigma \mu}{\Gamma^{\rho}}_{\nu \lambda}
++{\Gamma^\lambda}_{\sigma \mu}{\delta\Gamma^{\rho}}_{\nu \lambda}
+-{\delta\Gamma^{\lambda}}_{\sigma \nu} {\Gamma^\rho}_{\mu \lambda}
+-{\Gamma^{\lambda}}_{\sigma \nu} {\delta\Gamma^\rho}_{\mu \lambda}\\
+&
+=\partial_\nu{\delta\Gamma^\rho}_{\mu \sigma}
++{\Gamma^{\rho}}_{\nu \lambda}{\delta\Gamma^\lambda}_{\sigma \mu}
+-{\Gamma^{\lambda}}_{\sigma \nu} {\delta\Gamma^\rho}_{\mu \lambda}
+-\blue{{\Gamma^\lambda}_{\mu\nu}\delta{\Gamma^\rho}_{\lambda\sigma}}
+\\&
+-(\partial_\mu{\delta\Gamma^\rho}_{\nu \sigma}
++{\Gamma^\rho}_{\mu \lambda}{\delta\Gamma^{\lambda}}_{\sigma \nu}
+-{\Gamma^\lambda}_{\sigma \mu}{\delta\Gamma^{\rho}}_{\nu \lambda}
+-\blue{{\Gamma^\lambda}_{\mu\nu}\delta{\Gamma^\rho}_{\lambda\sigma}}
+)
+\end{align}
+(？克氏符变分表示两个协变导数之差，是张量，所以总可以用协变导数作用。)
+我们额外凑了蓝色的两项，注意到一个协变倒数和普通导数之差会出现各种联络系数。
+\begin{equation}
+	\nabla_{\lambda}\left(\delta \Gamma_{\nu \mu}^{\rho}\right)=\partial_{\lambda}\left(\delta \Gamma_{\nu \mu}^{\rho}\right)+\Gamma_{\lambda \sigma}^{\rho} \delta \Gamma_{v \mu}^{\sigma}-\Gamma_{\lambda v}^{\sigma} \delta \Gamma_{\sigma \mu}^{\rho}-\Gamma_{\lambda \mu}^{\sigma} \delta \Gamma_{v \sigma}^{\rho}
+\end{equation}
+
+所以我们发现这两项最后恰好等于(?不能理解这是怎么想到的，但总可以验证这是对的)
+
+\begin{equation}
+\delta {R_{\mu\nu\sigma}}^\rho=\nabla_\nu\delta{\Gamma^\rho}_{\mu\sigma}-\nabla_\sigma\delta{\Gamma^\rho}_{\mu\nu}
+\end{equation}
+曲率张量上指标和下2指标缩并得到里奇张量，所以
+\begin{equation}
+ \delta{R_{\mu\nu}}=\nabla_\sigma\delta{\Gamma^\sigma}_{\mu\nu}-\nabla_\nu\delta{\Gamma^\sigma}_{\sigma\mu}
+\end{equation}
+
+算上第三项另一个因子$ g_{\mu\nu} $所有的指标都变成哑指标，这样第三项变成：
+
+\begin{equation}
+	\sqrt{-g}g^{\mu\nu}\delta R_{\mu\nu}=\sqrt{-g}\nabla_{\sigma}(g^{\mu\nu}\delta{\Gamma^\sigma}_{\mu\nu}-g^{\sigma\nu}\delta{\Gamma^\rho}_{\rho\nu})=\sqrt{-g}\nabla_{\sigma}X^\sigma\label{deltaRmunu}
+\end{equation}
+
+所以，利用stoke定理把它转化成在边界区域的积分，我们总是可以使它在无穷远处为0，这一项就消去了。
+
+
+所以，剩下就把\eqref{2}代入\eqref{action}可得
+\begin{align}
+	\delta S=&\frac{1}{2k_D^2}\int\dd^4x(-\frac{1}{2}\sqrt{-g}Rg_{\mu\nu}\delta g^{\mu\nu}+\sqrt{-g}R_{\mu\nu}\delta g^{\mu\nu})\\
+	&=\frac{1}{2k_D^2}\int\dd^4x\sqrt{-g}(R_{\mu\nu}-\frac{1}{2}Rg_{\mu\nu})\delta g^{\mu\nu}
+\end{align}
+
+所得即真空爱因斯坦方程
+\section{物质项}
+	
+	$S_{m}=\int \mathrm{d}^{4} x \sqrt{-g} L_{m} $
+
+$ \delta S_{m}=\int \mathrm{d}^{4} x \delta\left(\sqrt{-g} L_{m}\right)=\int \mathrm{d}^{4} x\frac{\partial\left(\sqrt{-g} L_{m}\right)}{\partial g^{\mu \nu}} \delta g^{\mu \nu}$
+
+定义能动张量为$ T_{\mu \nu}=-\frac{2}{\sqrt{-g}} \frac{\partial\left(\sqrt{-g} L_{m}\right)}{\partial g^{\mu \nu}} $
+
+那么这个变分就可以写作$ \delta S_{m}=-\frac{1}{2} \int \mathrm{~d}^{4} x T_{\mu \nu} \sqrt{-g} \delta g^{\mu \nu} $
+
+	和上述场的作用量写在一起就是
+	\begin{equation}\label{key}
+		S=\frac{1}{2k_D^2}\int\dd ^4 xR+\int\dd^4x\mathcal{L}
+	\end{equation}
+	
+	
+	\begin{align}
+			&\frac{1}{2k_D^2}\int \dd^{4} xG_{ab}\sqrt{-g}\delta g^{ab}-\frac{1}{2k_D^2}\int\dd ^4 xk_D^2
+			\left(
+			-\frac{2}{\sqrt{-g}} \frac{\partial\left(\sqrt{-g} L_{m}\right)}{\partial g^{ab}}
+			\right) \sqrt{-g} \delta g^{ab}\\
+		&=\frac{1}{2k_D^2}\int \dd^{4}\left(G_{ab}-k_D^2T_{ab}\right)\sqrt{-g} \delta g^{ab}
+	\end{align}
+	
+	
+	
+	
+\section{克氏符变分}
+	\href{https://physics.stackexchange.com/questions/462686/whats-the-variation-of-the-christoffel-symbols-with-respect-to-the-metric}{physics stackexchange}给出了两种答案
+		
+	\href{https://zhuanlan.zhihu.com/p/354190513}{知乎}也有
+	
+	\textbf{1}
+	
+	The difference between two connections is a tensor, so $\delta\Gamma$ is a tensor.
+	
+	Evaluate your variational formula in Riemannian normal coordinates at some arbitrary point x0. Since the metric derivatives are zero at that point one gets
+\begin{equation}
+	\delta\Gamma^\sigma_{\mu\nu}=\frac{1}{2}\eta^{\sigma\lambda}(\partial_\nu\delta g_{\mu\lambda}+\partial_\mu\delta g_{\nu\lambda}-\partial_\lambda\delta g_{\mu\nu}),
+\end{equation}
+	where all functions are evaluated at $ x_0 $
+	
+	In Riemannian normal coordinates, $ \partial=\nabla $, so we can rewrite
+\begin{equation}
+	\delta\Gamma^\sigma_{\mu\nu}=\frac{1}{2}g^{\sigma\lambda}(\nabla_\nu\delta g_{\mu\lambda}+\nabla_\mu\delta g_{\nu\lambda}-\nabla_\lambda\delta g_{\mu\nu}).
+\end{equation}
+	
+	This equation however is tensorial, so it must be valid at x0 in other coordinates too, not just Riemannian normal coordinates.
+	
+	Since x0 was arbitrary, this relation must then hold for any point.
+
+\textbf{2}也可以直接强行凑出来
+
+
+\begin{align}
+\Gamma^{a}_{bc} &= \cfrac{1}{2}g^{ad}(\partial_{b}g_{dc} + \partial_{c}g_{bd} - \partial_{d}g_{bc})  \Rightarrow\\
+\delta\Gamma^{a}_{bc} &= \cfrac{1}{2}\delta g^{ad}(\partial_{b}g_{dc} + \partial_{c}g_{bd} - \partial_{d}g_{bc})  + \cfrac{1}{2}g^{ad}(\partial_{b}\delta g_{dc} + \partial_{c}\delta g_{bd} - \partial_{d}\delta g_{bc}) \\
+& = -\cfrac{1}{2}g^{ad}g^{de}(\delta g_{de})(\partial_{b}g_{dc} + \partial_{c}g_{bd} - \partial_{d}g_{bc})
++ \cfrac{1}{2}g^{ad}(\partial_{b}\delta g_{dc} + \partial_{c}\delta g_{bd} - \partial_{d}\delta g_{bc})\\
+& = -g^{ad}(\delta g_{de})\Gamma^{e}_{bc}+ \cfrac{1}{2}g^{ad}(\partial_{b}\delta g_{dc} + \partial_{c}\delta g_{bd} - \partial_{d}\delta g_{bc})\\
+&= \cfrac{1}{2}g^{ad}\big[\partial_{b}\delta g_{dc} + \partial_{c}\delta g_{bd} - \partial_{d}\delta g_{bc} - 2\delta g_{de}\Gamma^{e}_{bc}\big] \\
+&=\cfrac{1}{2} g^{ad}\big[ \partial_{b}\delta g_{dc} -\Gamma^{e}_{bc}\delta g_{ed} -\Gamma^{e}_{bd}\delta g_{ec}\\
+&+\partial_{c}\delta g_{bd} -\Gamma^{e}_{cd}\delta g_{eb} - \Gamma^{e}_{cb}\delta g_{ed} - \partial_{d}\delta g_{bc} + \Gamma^{e}_{db}\delta g_{ec} + \Gamma^{e}_{dc}\delta g_{eb} \big]\\
+&= \cfrac{1}{2}g^{ad}\big[\nabla_{b}\delta g_{dc}+\nabla_{c}\delta g_{bd}- \nabla_{d}\delta g_{bc}\big]
+\end{align}
+
+
+
+
+
+
+
+
+
+
+\end{document}
